@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chusdev.ems.backend.api.models.dto.AsignaturaDTO;
+import com.chusdev.ems.backend.api.models.dto.mapper.AsignaturaMapper;
 import com.chusdev.ems.backend.api.models.entities.Asignatura;
 import com.chusdev.ems.backend.api.services.AsignaturaService;
 
@@ -26,16 +27,20 @@ public class AsignaturaController {
     @Autowired
     private AsignaturaService service;
 
+    @Autowired
+    private AsignaturaMapper asignaturaMapper;
+
     @GetMapping
-    public List<Asignatura> list(){
-        return service.findAll();
+    public List<AsignaturaDTO> list(){
+        return asignaturaMapper.listToDTO(service.findAll()); 
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> show(@PathVariable Long id){
         Optional<Asignatura> optAsignatura = service.findById(id);
         if (optAsignatura.isPresent()){
-            return ResponseEntity.ok(optAsignatura.orElseThrow());
+            AsignaturaDTO asignaturaDTO = asignaturaMapper.entityToDTO(optAsignatura.orElseThrow());
+            return ResponseEntity.ok(asignaturaDTO);
         }
 
         return ResponseEntity.notFound().build();

@@ -17,4 +17,14 @@ public class Asignatura extends EntidadAuditable{
     @ManyToOne
     @JoinColumn(name="estudio_id")
     private Estudio estudio;
+
+    public Long getEstudio_id(){
+        Long estudio_id = null;
+
+        if(this.estudio != null){
+            estudio_id = estudio.getId();
+        }
+
+        return estudio_id;
+    }
 }

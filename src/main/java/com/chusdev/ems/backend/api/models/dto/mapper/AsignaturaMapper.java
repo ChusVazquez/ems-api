@@ -1,30 +1,51 @@
 package com.chusdev.ems.backend.api.models.dto.mapper;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.chusdev.ems.backend.api.models.dto.AsignaturaDTO;
-import com.chusdev.ems.backend.api.models.dto.EstudioDTO;
 import com.chusdev.ems.backend.api.models.entities.Asignatura;
 import com.chusdev.ems.backend.api.models.entities.Estudio;
+import com.chusdev.ems.backend.api.repositories.EstudioRepository;
 
 @Component
 public class AsignaturaMapper {
     @Autowired
     ModelMapper modelMapper;
 
-    public Asignatura dtoToEntity(AsignaturaDTO asignaturaDTO){
+    @Autowired
+    EstudioRepository estudioRepository;
+
+    public Asignatura dtoToEntity(AsignaturaDTO asignaturaDTO){        
         Asignatura asignatura = modelMapper.map(asignaturaDTO, Asignatura.class);
-        asignatura.setEstudio(modelMapper.map(asignaturaDTO.getEstudio(), Estudio.class));
+        Estudio estudio = null;
+        if (asignaturaDTO.getEstudio_id() != null && asignaturaDTO.getEstudio_id() > 0){
+            Optional<Estudio> optEstudio = estudioRepository.findById(asignaturaDTO.getEstudio_id());
+            if (optEstudio.isPresent()){
+                estudio = optEstudio.orElseThrow();
+            }
+        }
+        
+        asignatura.setEstudio(estudio);
         
         return asignatura;
     }
 
     public AsignaturaDTO entityToDTO(Asignatura asignatura){
-        AsignaturaDTO asignaturaDTO = modelMapper.map(asignatura, AsignaturaDTO.class);
-        asignaturaDTO.setEstudio(modelMapper.map(asignatura.getEstudio(), EstudioDTO.class));
+        AsignaturaDTO asignaturaDTO = modelMapper.map(asignatura, AsignaturaDTO.class);        
+        asignaturaDTO.setEstudio_id(asignatura.getEstudio_id());
 
         return asignaturaDTO;
+    }
+
+    public List<AsignaturaDTO> listToDTO(List<Asignatura> listaAsignaturas){
+        return listaAsignaturas.stream()
+                .map(asignatura -> this.entityToDTO(asignatura))
+                .collect(Collectors.toList());
     }
 }

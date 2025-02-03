@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AsignaturaDTO {
-
+    private Long id;
     private String alias;
     private String nombre;
 
-    private EstudioDTO estudio;
+    private Long estudio_id;
 }
