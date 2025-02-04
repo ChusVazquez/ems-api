@@ -4,9 +4,15 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-//TODO Crear una clase abstracta para campos de auditoría y extenderla (ver AuditingEntityListener)
-//https://mayankposts.medium.com/database-auditing-in-spring-boot-with-spring-security-context-and-spring-data-jpa-9215b43744bb
 
+/**
+ * Contiene los campos comunes de personas para ser heredados por Alumno, Profesor...
+ * Extiende EntidadAuditable (campos de auditoría) ->
+ * Extiende EntidadBase (campo Id)
+ * 
+ * @see EntidadAuditable
+ * @see EntidadBase
+ */
 @Getter
 @Setter
 @MappedSuperclass

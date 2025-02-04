@@ -7,6 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/** 
+* Rol para asignar a los usuarios (actualmente se contemplan ROLE_ADMIN y ROLE_USER) 
+*/
 @Entity
 @Table(name = "roles")
 public class Role {

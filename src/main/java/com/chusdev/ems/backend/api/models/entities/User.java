@@ -20,6 +20,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Usuarios para acceder a la API
+ */
 @Entity
 @Table(name="users")
 public class User implements IUser{

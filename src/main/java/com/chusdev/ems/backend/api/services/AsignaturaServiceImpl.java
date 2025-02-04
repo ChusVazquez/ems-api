@@ -22,24 +22,43 @@ public class AsignaturaServiceImpl implements AsignaturaService{
     @Autowired
     private AsignaturaMapper asignaturaMapper;
 
+    
+    /** 
+     * @return List<Asignatura>
+     */
     @Override
     @Transactional(readOnly = true)
     public List<Asignatura> findAll() {
         return (List<Asignatura>)repository.findAll();
     }
 
+    
+    /** 
+     * @param id
+     * @return Optional<Asignatura>
+     */
     @Override
     @Transactional(readOnly = true)
     public Optional<Asignatura> findById(Long id) {
         return repository.findById(id);
     }
 
+    
+    /** 
+     * @param asignatura
+     * @return Asignatura
+     */
     @Override
     @Transactional
     public Asignatura save(Asignatura asignatura) {
         return repository.save(asignatura);
     }
 
+    
+    /** 
+     * @param asignaturaDTO
+     * @return Asignatura
+     */
     @Override
     @Transactional
     public Asignatura save(AsignaturaDTO asignaturaDTO) {

@@ -1,19 +1,23 @@
 package com.chusdev.ems.backend.api.models.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Grupo al que pueden pertenecer profesores y alumnos (dependiendo del tipo)
+ * Para los alumnos conforman los grupos de clase
+ * Para los profesores conforman los distintos departamentos o seminarios
+ * Extiende EntidadAuditable (campos de auditoría) ->
+ * Extiende EntidadBase (campo Id)
+ *  
+ * @see EntidadAuditable
+ * @see EntidadBase 
+ */
 @Getter
 @Setter
 @Entity
-public class Grupo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Grupo extends EntidadAuditable{    
 
     private byte tipo;
 

@@ -6,6 +6,14 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Asignatura para detallar Horarios y Clases para el control de asistencia
+ * Extiende EntidadAuditable (campos de auditoría) ->
+ * Extiende EntidadBase (campo Id)
+ * 
+ * @see EntidadAuditable
+ * @see EntidadBase
+ */
 @Getter
 @Setter
 @Entity

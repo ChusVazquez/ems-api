@@ -7,6 +7,10 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Entidad base para cualquier entidad que deba tener Id
+ * Id: Long autogenerado de tipo IDENTITY
+ */
 @Getter
 @Setter
 @MappedSuperclass
