@@ -27,4 +27,14 @@ public class Asignatura extends EntidadAuditable{
 
         return estudio_id;
     }
+
+    public String getEstudioAlias(){
+        String estudioAlias = new String("");
+
+        if (this.estudio != null){
+            estudioAlias = estudio.getAlias();
+        }
+
+        return estudioAlias;
+    }
 }

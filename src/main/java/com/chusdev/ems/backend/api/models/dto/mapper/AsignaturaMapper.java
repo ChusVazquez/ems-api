@@ -37,15 +37,17 @@ public class AsignaturaMapper {
     }
 
     public AsignaturaDTO entityToDTO(Asignatura asignatura){
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         AsignaturaDTO asignaturaDTO = modelMapper.map(asignatura, AsignaturaDTO.class);        
         asignaturaDTO.setEstudio_id(asignatura.getEstudio_id());
+        asignaturaDTO.setEstudioAlias(asignatura.getEstudioAlias());
 
         return asignaturaDTO;
-    }
+    }    
 
     public List<AsignaturaDTO> listToDTO(List<Asignatura> listaAsignaturas){
         return listaAsignaturas.stream()
                 .map(asignatura -> this.entityToDTO(asignatura))
                 .collect(Collectors.toList());
-    }
+    }    
 }

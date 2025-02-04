@@ -10,5 +10,6 @@ public class AsignaturaDTO {
     private String alias;
     private String nombre;
 
-    private Long estudio_id;
+    private Long estudio_id; //Para la edición de la asignatura 
+    private String estudioAlias; //Para mostrar el alias en listados
 }
