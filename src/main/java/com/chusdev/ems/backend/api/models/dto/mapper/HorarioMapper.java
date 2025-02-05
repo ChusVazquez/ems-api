@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.chusdev.ems.backend.api.models.dto.HorarioDTO;
 import com.chusdev.ems.backend.api.models.entities.Horario;
 import com.chusdev.ems.backend.api.repositories.AsignaturaRepository;
+import com.chusdev.ems.backend.api.repositories.AulaRepository;
 import com.chusdev.ems.backend.api.repositories.GrupoRepository;
 import com.chusdev.ems.backend.api.repositories.ProfesorRepository;
 
@@ -28,6 +29,9 @@ public class HorarioMapper {
     ProfesorMapper profesorMapper;
 
     @Autowired
+    AulaMapper aulaMapper;
+
+    @Autowired
     AsignaturaRepository asignaturaRepository;
 
     @Autowired
@@ -35,6 +39,9 @@ public class HorarioMapper {
 
     @Autowired
     GrupoRepository grupoRepository;
+
+    @Autowired
+    AulaRepository aulaRepository;
 
     /**
      * Mapea HorarioDTO a Horario.
@@ -52,7 +59,10 @@ public class HorarioMapper {
         horario.setGrupo(grupoMapper.dtoToEntity(horarioDTO.getGrupo()));        
 
         //Mapeo de Horario.Profesor en base al Id de horarioDTO.ProfesorBaseDTO.Id
-        horario.setProfesor(profesorMapper.baseDtoToEntity(horarioDTO.getProfesor()));        
+        horario.setProfesor(profesorMapper.baseDtoToEntity(horarioDTO.getProfesor()));
+        
+        //Mapeo de Horario.Aula en base al Id de horarioDTO.AulaDTO.Id
+        horario.setAula(aulaMapper.dtoToEntity(horarioDTO.getAula()));
 
         return horario;
     }

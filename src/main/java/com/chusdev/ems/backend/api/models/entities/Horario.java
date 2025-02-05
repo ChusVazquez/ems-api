@@ -65,4 +65,11 @@ public class Horario extends EntidadAuditable{
     @JoinColumn(name = "profesor_id")
     private Profesor profesor;
 
+    /**
+     * Aula en la que se imparte la clase de este horario
+     */
+    @ManyToOne
+    @JoinColumn(name = "aula_id")
+    private Aula aula;
+
 }

@@ -11,6 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class HorarioDTO {
+
+    private Long id;
     /**
      * Día de la semana representado por un número del 1(Lunes) al 7(Domingo)
      */
@@ -19,6 +21,7 @@ public class HorarioDTO {
     /**
      * Hora a la que empieza la clase
      */
+    // @JsonFormat(pattern = "HH:mm")
     private Time hora;
 
     /**
@@ -40,4 +43,9 @@ public class HorarioDTO {
      * Datos básicos del profesor
      */
     private ProfesorBaseDTO profesor;
+
+    /**
+     * Datos básicos del aula
+     */
+    private AulaDTO aula;
 }
