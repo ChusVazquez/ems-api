@@ -6,15 +6,20 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.chusdev.ems.backend.api.models.dto.ProfesorBaseDTO;
 import com.chusdev.ems.backend.api.models.dto.ProfesorDTO;
 import com.chusdev.ems.backend.api.models.entities.Grupo;
 import com.chusdev.ems.backend.api.models.entities.Profesor;
 import com.chusdev.ems.backend.api.repositories.GrupoRepository;
+import com.chusdev.ems.backend.api.repositories.ProfesorRepository;
 
 @Component
 public class ProfesorMapper {
      @Autowired
     GrupoRepository grupoRepository;
+
+    @Autowired
+    ProfesorRepository profesorRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -34,6 +39,21 @@ public class ProfesorMapper {
         return profesor;
     }
 
+    public Profesor baseDtoToEntity(ProfesorBaseDTO profesorBaseDTO){
+        Profesor profesor = null;
+        
+        if(profesorBaseDTO != null 
+        && profesorBaseDTO.getId() > 0){
+            Optional<Profesor> optProfesor = profesorRepository
+                .findById(profesorBaseDTO.getId());
+            if (optProfesor.isPresent()){
+                profesor = optProfesor.orElseThrow();
+            }
+        }
+
+        return profesor;
+    }
+
     public ProfesorDTO entityToDTO(Profesor profesor){
         ProfesorDTO profesorDTO = modelMapper.map(profesor, ProfesorDTO.class);
 
@@ -44,5 +64,12 @@ public class ProfesorMapper {
         }
 
         return profesorDTO;
+    }
+
+    public ProfesorBaseDTO entityToBaseDTO(Profesor profesor){
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        ProfesorBaseDTO profesorBaseDTO = modelMapper.map(profesor, ProfesorBaseDTO.class);
+
+        return profesorBaseDTO;
     }
 }
