@@ -1,6 +1,6 @@
 package com.chusdev.ems.backend.api.models.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,12 +14,12 @@ public class ClaseDTO {
     /**
      * Fecha y hora de inicio de la Clase
      */
-    private Date fechaInicio;
+    private Timestamp fechaInicio;
 
     /**
      * Fecha y hora de finalización de la Clase
      */
-    private Date fechaFin;
+    private Timestamp fechaFin;
 
     /**
      * Un breve resumen de lo que se ha hecho en la clase

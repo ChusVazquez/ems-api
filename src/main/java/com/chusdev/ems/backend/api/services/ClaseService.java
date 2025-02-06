@@ -21,4 +21,11 @@ public interface ClaseService {
 
     void delete(Long id);
 
+    /**
+     * Todas las clases de un horario
+     * @param horarioId
+     * @return List<Clase>
+     */
+    List<Clase> findByHorarioId(Long horarioId);
+
 }

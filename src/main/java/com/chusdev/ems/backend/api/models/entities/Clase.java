@@ -1,6 +1,6 @@
 package com.chusdev.ems.backend.api.models.entities;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -33,12 +33,12 @@ public class Clase extends EntidadAuditable{
     /**
      * Fecha y hora de inicio de la Clase
      */
-    private Date fechaInicio;
+    private LocalDateTime fechaInicio;
 
     /**
      * Fecha y hora de finalización de la Clase
      */
-    private Date fechaFin;
+    private LocalDateTime fechaFin;
 
     /**
      * Un breve resumen de lo que se ha hecho en la clase

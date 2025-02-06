@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.chusdev.ems.backend.api.models.dto.HorarioDTO;
+import com.chusdev.ems.backend.api.models.entities.Clase;
 import com.chusdev.ems.backend.api.models.entities.Horario;
 
 public interface HorarioService {
@@ -20,5 +21,9 @@ public interface HorarioService {
     Optional<Horario> update(HorarioDTO horarioDTO, Long id);
 
     void delete(Long id);
+
+    List<Clase> nextClases(Long horarioId, int num);
+
+    List<Clase> getClases(Long horarioId);
 
 }

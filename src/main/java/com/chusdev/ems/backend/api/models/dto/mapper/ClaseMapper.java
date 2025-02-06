@@ -1,5 +1,6 @@
 package com.chusdev.ems.backend.api.models.dto.mapper;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,6 +60,15 @@ public class ClaseMapper {
     public Clase dtoToEntity(ClaseDTO claseDTO){
         Clase clase = modelMapper.map(claseDTO, Clase.class);
 
+        //El formato de la fecha en ClaseDTO es sql.Date pero en Clase es java.LocalDateTime
+        if (claseDTO.getFechaInicio() != null){
+            clase.setFechaInicio(claseDTO.getFechaInicio().toLocalDateTime());
+        }
+
+        if (claseDTO.getFechaFin() != null){
+            clase.setFechaFin(claseDTO.getFechaFin().toLocalDateTime());
+        }
+
         //Mapeo de Clase.Asignatura en base al Id de claseDTO.AsignaturaBaseDTO.Id
         clase.setAsignatura(asignaturaMapper.baseDtoToEntity(claseDTO.getAsignatura()));
         
@@ -87,6 +97,15 @@ public class ClaseMapper {
      */
     public ClaseDTO entityToDTO(Clase clase){
         ClaseDTO claseDTO = modelMapper.map(clase, ClaseDTO.class);
+
+        //El formato de la fecha en ClaseDTO es sql.Date pero en Clase es java.LocalDateTime
+        if (clase.getFechaInicio() != null){
+            claseDTO.setFechaInicio(Timestamp.valueOf(clase.getFechaInicio()));
+        }
+
+        if (clase.getFechaFin() != null){
+            claseDTO.setFechaFin(Timestamp.valueOf(clase.getFechaFin()));
+        }        
 
         return claseDTO;
     }

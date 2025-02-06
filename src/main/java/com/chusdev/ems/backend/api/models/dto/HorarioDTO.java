@@ -1,6 +1,7 @@
 package com.chusdev.ems.backend.api.models.dto;
 
 import java.sql.Time;
+import java.time.DayOfWeek;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +12,9 @@ public class HorarioDTO {
 
     private Long id;
     /**
-     * Día de la semana representado por un número del 1(Lunes) al 7(Domingo)
+     * Día de la semana representado en formato DayOfWeek
      */
-    private Byte dia;
+    private DayOfWeek dia;
 
     /**
      * Hora a la que empieza la clase

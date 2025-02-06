@@ -72,4 +72,13 @@ public class ClaseServiceImpl implements ClaseService{
         repository.deleteById(id);
     }
 
+    /**
+     * Todas las clases de un horario
+     * @param horarioId
+     * @return List<Clase>
+     */
+    public List<Clase> findByHorarioId(Long horarioId){
+        return repository.findByHorarioId(horarioId);
+    }
+
 }

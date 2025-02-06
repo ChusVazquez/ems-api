@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chusdev.ems.backend.api.models.dto.ClaseDTO;
 import com.chusdev.ems.backend.api.models.dto.HorarioDTO;
+import com.chusdev.ems.backend.api.models.dto.mapper.ClaseMapper;
 import com.chusdev.ems.backend.api.models.dto.mapper.HorarioMapper;
 import com.chusdev.ems.backend.api.models.entities.Horario;
+import com.chusdev.ems.backend.api.services.ClaseService;
 import com.chusdev.ems.backend.api.services.HorarioService;
 
 @RestController
@@ -28,7 +32,13 @@ public class HorarioController {
     private HorarioService service;
 
     @Autowired
+    private ClaseService claseService;
+
+    @Autowired
     private HorarioMapper horarioMapper;
+
+    @Autowired
+    private ClaseMapper claseMapper;
 
     @GetMapping
     public List<HorarioDTO> list(){
@@ -46,6 +56,11 @@ public class HorarioController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/{id}/getClases")
+    public List<ClaseDTO> getClases(@PathVariable Long id){
+        return claseMapper.listToDTO(claseService.findByHorarioId(id));
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody HorarioDTO horarioDTO){
         return ResponseEntity
@@ -53,6 +68,20 @@ public class HorarioController {
                 .body(service.save(horarioDTO));
     }
 
+    /**
+     * Genera las N clases siguientes de ese horario de forma automática
+     * @param id - Identificador del horario del que queremos generar clases
+     * @param num - [Opcional] nº de clases a generar (por defecto 1)
+     * @return List<ClaseDTO>
+     */
+    @PostMapping("/{id}/nextClases")
+    public List<ClaseDTO> nextClases(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "1") int num)
+    {
+        return claseMapper.listToDTO(service.nextClases(id, num));
+    }    
+    
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody HorarioDTO horarioDTO, @PathVariable Long id){
         Optional<Horario> optHorario = service.findById(id);

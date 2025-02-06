@@ -1,5 +1,6 @@
 package com.chusdev.ems.backend.api.models.dto.mapper;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,11 @@ public class HorarioMapper {
     public Horario dtoToEntity(HorarioDTO horarioDTO){
         Horario horario = modelMapper.map(horarioDTO, Horario.class);
 
+        //El formato de la hora en HorarioDTO es sql.Time pero en Horario es java.LocalTime
+        if (horarioDTO.getHora() != null){
+            horario.setHora(horarioDTO.getHora().toLocalTime());
+        }
+
         //Mapeo de Horario.Asignatura en base al Id de horarioDTO.AsignaturaBaseDTO.Id
         horario.setAsignatura(asignaturaMapper.baseDtoToEntity(horarioDTO.getAsignatura()));
         
@@ -75,6 +81,11 @@ public class HorarioMapper {
      */
     public HorarioDTO entityToDTO(Horario horario){
         HorarioDTO horarioDTO = modelMapper.map(horario, HorarioDTO.class);
+
+        //El formato de la hora en HorarioDTO es sql.Time pero en Horario es java.LocalTime
+        if (horario.getHora() != null){
+            horarioDTO.setHora(Time.valueOf(horario.getHora()));
+        }
 
         return horarioDTO;
     }
