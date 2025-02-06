@@ -5,9 +5,6 @@ import java.sql.Time;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Clase DTO para Horario
- */
 @Getter
 @Setter
 public class HorarioDTO {

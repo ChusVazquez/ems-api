@@ -79,6 +79,11 @@ public class HorarioMapper {
         return horarioDTO;
     }
 
+    /**
+     * Mapea una lista de Horario a una lista de HorarioDTO
+     * @param listaHorarios
+     * @return List<HorarioDTO>
+     */
     public List<HorarioDTO> listToDTO(List<Horario> listaHorarios){
         return listaHorarios.stream()
                 .map(horario -> this.entityToDTO(horario))
