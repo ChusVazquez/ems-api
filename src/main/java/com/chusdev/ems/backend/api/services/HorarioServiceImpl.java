@@ -50,11 +50,13 @@ public class HorarioServiceImpl implements HorarioService {
     }
 
     @Override
+    @Transactional
     public Horario save(HorarioDTO horarioDTO) {
         return this.save(horarioMapper.dtoToEntity(horarioDTO));
     }
 
     @Override
+    @Transactional
     public Optional<Horario> update(Horario horario, Long id) {
         Optional<Horario> optHorario = this.findById(id);
         Horario savedHorario = null;
@@ -80,6 +82,7 @@ public class HorarioServiceImpl implements HorarioService {
     }
 
     @Override
+    @Transactional
     public List<Clase> nextClases(Long horarioId, int num) {
         List<Clase> listaClases = new ArrayList<>();
         Optional<Horario> optHorario = repository.findById(horarioId);
@@ -113,7 +116,9 @@ public class HorarioServiceImpl implements HorarioService {
                 clase.setAsignatura(horario.getAsignatura());
                 clase.setAula(horario.getAula());
                 clase.setGrupo(horario.getGrupo());
-                clase.setProfesor(horario.getProfesor());                
+                clase.setProfesor(horario.getProfesor());
+                
+                claseRepository.save(clase);
 
                 //Establezco como fechaDesde la fecha de la clase creada 
                 //como base para calcular la siguiente

@@ -105,7 +105,11 @@ public class ClaseMapper {
 
         if (clase.getFechaFin() != null){
             claseDTO.setFechaFin(Timestamp.valueOf(clase.getFechaFin()));
-        }        
+        }
+        
+        if (clase.getHorario() != null){
+            claseDTO.setHorario_id(clase.getHorario().getId());
+        }
 
         return claseDTO;
     }

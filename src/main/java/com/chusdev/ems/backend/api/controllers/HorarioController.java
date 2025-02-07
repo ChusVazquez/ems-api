@@ -74,7 +74,7 @@ public class HorarioController {
      * @param num - [Opcional] nº de clases a generar (por defecto 1)
      * @return List<ClaseDTO>
      */
-    @PostMapping("/{id}/nextClases")
+    @PostMapping("/nextClases/{id}")
     public List<ClaseDTO> nextClases(
             @PathVariable Long id,
             @RequestParam(defaultValue = "1") int num)
