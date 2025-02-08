@@ -7,6 +7,7 @@ import com.chusdev.ems.backend.api.models.dto.AlumnoDTO;
 import com.chusdev.ems.backend.api.models.entities.Alumno;
 
 public interface AlumnoService {
+    //#region CRUD
     List<Alumno> findAll();
 
     Optional<Alumno> findById(Long id);
@@ -20,4 +21,7 @@ public interface AlumnoService {
     Optional<Alumno> update(AlumnoDTO alumno, Long id);
 
     void delete(Long id);
+    //#endregion
+
+    List<Alumno> findByGrupoId(Long grupoId);
 }

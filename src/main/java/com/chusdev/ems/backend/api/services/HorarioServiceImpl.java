@@ -81,6 +81,12 @@ public class HorarioServiceImpl implements HorarioService {
         repository.deleteById(id);
     }
 
+    /**
+     * Genera las N clases siguientes de ese horario de forma automática
+     * @param horarioId - Identificador del horario del que queremos generar clases
+     * @param num - [Opcional] nº de clases a generar (por defecto 1)
+     * @return List<Clase>
+     */
     @Override
     @Transactional
     public List<Clase> nextClases(Long horarioId, int num) {

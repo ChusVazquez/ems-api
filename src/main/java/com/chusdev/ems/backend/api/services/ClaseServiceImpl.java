@@ -2,6 +2,7 @@ package com.chusdev.ems.backend.api.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.chusdev.ems.backend.api.models.dto.ClaseDTO;
 import com.chusdev.ems.backend.api.models.dto.mapper.ClaseMapper;
+import com.chusdev.ems.backend.api.models.entities.Alumno;
+import com.chusdev.ems.backend.api.models.entities.Asistencia;
 import com.chusdev.ems.backend.api.models.entities.Clase;
+import com.chusdev.ems.backend.api.repositories.AlumnoRepository;
+import com.chusdev.ems.backend.api.repositories.AsistenciaRepository;
 import com.chusdev.ems.backend.api.repositories.ClaseRepository;
 
 @Service
@@ -20,12 +25,29 @@ public class ClaseServiceImpl implements ClaseService{
     ClaseRepository repository;
 
     @Autowired
+    AlumnoRepository alumnoRepository;
+
+    @Autowired
+    AsistenciaRepository asistenciaRepository;
+
+    @Autowired
     ClaseMapper claseMapper;
 
     @Override
     @Transactional(readOnly = true)
     public List<Clase> findAll() {
         return (List<Clase>) repository.findAll();
+    }
+
+    /**
+     * Todas las clases de un horario
+     * @param horarioId
+     * @return List<Clase>
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Clase> findByHorarioId(Long horarioId){
+        return repository.findByHorarioId(horarioId);
     }
 
     @Override
@@ -37,7 +59,15 @@ public class ClaseServiceImpl implements ClaseService{
     @Override
     @Transactional
     public Clase save(Clase clase) {
-        return repository.save(clase);
+        Clase savedClase = repository.save(clase);
+
+        //Al crear o editar la clase
+        //Si no tiene lista de asistencias, se genera
+        if (savedClase != null && savedClase.getAsistencias() == null){
+            this.generarAsistencias(savedClase.getId());
+        } 
+
+        return savedClase;
     }
 
     @Override
@@ -73,12 +103,45 @@ public class ClaseServiceImpl implements ClaseService{
     }
 
     /**
-     * Todas las clases de un horario
-     * @param horarioId
-     * @return List<Clase>
+     * Se genera todo el registro de asistencia de la clase al crearla
+     * Por defecto se presupone que todos los alumnos asisten
+     * para que el profesor sólo tenga que marcar las faltas o retrasos
      */
-    public List<Clase> findByHorarioId(Long horarioId){
-        return repository.findByHorarioId(horarioId);
+    @Override
+    @Transactional
+    public List<Asistencia> generarAsistencias(Long claseId){
+        List<Asistencia> listaAsistencias = null;
+        
+        Optional<Clase> optClase = repository.findById(claseId);
+        if(optClase.isPresent()){
+            Clase clase = optClase.orElseThrow();
+            
+            //Obtener lista de alumnos del grupo del horario
+            if (clase.getHorario() != null 
+                && clase.getHorario().getGrupo() != null){
+                
+                List<Alumno> alumnos = alumnoRepository
+                    .findByGrupoId(clase.getHorario().getGrupo().getId());
+                
+                if (alumnos != null){
+                    //Generar asistencia por cada alumno
+
+                    listaAsistencias = alumnos.stream()
+                        .map(alumno -> new Asistencia(clase, alumno))
+                        .collect(Collectors.toList());
+
+                    if (listaAsistencias != null){
+                        asistenciaRepository.saveAll(listaAsistencias);
+                    }
+
+                }
+            }
+
+
+            
+        }
+
+        return listaAsistencias;
     }
 
 }

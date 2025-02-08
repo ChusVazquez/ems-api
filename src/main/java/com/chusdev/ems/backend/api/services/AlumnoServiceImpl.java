@@ -71,4 +71,10 @@ public class AlumnoServiceImpl implements AlumnoService{
     public Optional<Alumno> update(AlumnoDTO alumnoDTO, Long id) {
         return this.update(alumnoMapper.dtoToEntity(alumnoDTO), id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Alumno> findByGrupoId(Long grupoId) {
+        return repository.findByGrupoId(grupoId);
+    }
 }

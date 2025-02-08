@@ -1,10 +1,14 @@
 package com.chusdev.ems.backend.api.models.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -83,4 +87,11 @@ public class Clase extends EntidadAuditable{
     @ManyToOne
     @JoinColumn(name = "horario_id")
     private Horario horario;
+
+    /**
+     * Lista de asistencias que dependen de la clase
+     * FechType.LAZY para que sólo lo recupere si se hace un get
+     */
+    @OneToMany(mappedBy = "clase", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Asistencia> asistencias;
 }

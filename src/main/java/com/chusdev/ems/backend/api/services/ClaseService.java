@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.chusdev.ems.backend.api.models.dto.ClaseDTO;
+import com.chusdev.ems.backend.api.models.entities.Asistencia;
 import com.chusdev.ems.backend.api.models.entities.Clase;
 
 public interface ClaseService {
@@ -27,5 +28,7 @@ public interface ClaseService {
      * @return List<Clase>
      */
     List<Clase> findByHorarioId(Long horarioId);
+
+    List<Asistencia> generarAsistencias(Long claseId);
 
 }

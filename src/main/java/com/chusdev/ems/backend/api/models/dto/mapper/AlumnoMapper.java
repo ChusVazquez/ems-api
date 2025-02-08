@@ -6,9 +6,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.chusdev.ems.backend.api.models.dto.AlumnoBaseDTO;
 import com.chusdev.ems.backend.api.models.dto.AlumnoDTO;
 import com.chusdev.ems.backend.api.models.entities.Alumno;
 import com.chusdev.ems.backend.api.models.entities.Grupo;
+import com.chusdev.ems.backend.api.repositories.AlumnoRepository;
 import com.chusdev.ems.backend.api.repositories.GrupoRepository;
 
 @Component
@@ -19,6 +21,9 @@ public class AlumnoMapper {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    AlumnoRepository alumnoRepository;
 
     public Alumno dtoToEntity(AlumnoDTO alumnoDTO){
         Alumno alumno = modelMapper.map(alumnoDTO, Alumno.class);
@@ -35,6 +40,22 @@ public class AlumnoMapper {
         return alumno;
     }
 
+    public Alumno baseDtoToEntity(AlumnoBaseDTO alumnoBaseDTO){
+        Alumno alumno = null;
+
+        if(alumnoBaseDTO != null
+            && alumnoBaseDTO.getId() > 0){
+            
+            Optional<Alumno> optAlumno = alumnoRepository
+                .findById(alumnoBaseDTO.getId());
+            if (optAlumno.isPresent()){
+                alumno = optAlumno.orElseThrow();
+            }
+        }
+
+        return alumno;
+    }
+
     public AlumnoDTO entityToDTO(Alumno alumno){
         AlumnoDTO alumnoDTO = modelMapper.map(alumno, AlumnoDTO.class);
 
@@ -45,5 +66,12 @@ public class AlumnoMapper {
         }
 
         return alumnoDTO;
+    }
+
+    public AlumnoBaseDTO entityToBaseDTO(Alumno alumno){
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        AlumnoBaseDTO alumnoBaseDTO = modelMapper.map(alumno, AlumnoBaseDTO.class);
+
+        return alumnoBaseDTO;
     }
 }
