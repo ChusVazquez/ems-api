@@ -18,5 +18,9 @@ public class AsistenciaDTO {
 
     private Long clase_id;
 
+    private Byte estado;
+
     private AlumnoBaseDTO alumno;
+
+    private ProfesorBaseDTO profesor;
 }

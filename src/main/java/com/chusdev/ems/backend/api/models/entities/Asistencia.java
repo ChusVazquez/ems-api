@@ -23,10 +23,13 @@ import lombok.Setter;
 @Entity
 public class Asistencia extends EntidadAuditable{
     
-    public Asistencia (Clase clase, Alumno alumno){
+    public Asistencia(){}
+    
+    public Asistencia (Clase clase, Alumno alumno, Profesor profesor){
         this.clase = clase;
         this.alumno = alumno;
-        this.estado = EstadoAsistencia.ASISTENCIA;
+        this.profesor = profesor;
+        this.estado = 1; //Asiste
     }
 
     /**
@@ -50,6 +53,13 @@ public class Asistencia extends EntidadAuditable{
     private Alumno alumno;
 
     /**
+     * Alumno del que se registra la asistencia a la clase
+     */
+    @ManyToOne
+    @JoinColumn(name = "profesor_id")
+    private Profesor profesor;
+
+    /**
      * Estado de la asistencia
      * Actualmente los estados son fijos pero
      * a futuro se podrán definir en una tabla configurable
@@ -59,33 +69,6 @@ public class Asistencia extends EntidadAuditable{
      * 3 - Retraso
      * 4 - Falta justificada
      */
-    private EstadoAsistencia estado;
-
-    
-    public enum EstadoAsistencia {
-        ASISTENCIA(1),
-        FALTA(2),
-        RETRASO(3),
-        FALTA_JUSTIFICADA(4);
-
-        private final byte valor;
-
-        EstadoAsistencia(int valor) {
-            this.valor = (byte) valor;
-        }
-
-        public byte getValor() {
-            return valor;
-        }
-        
-        public static EstadoAsistencia fromValor(byte valor) {
-            for (EstadoAsistencia estado : EstadoAsistencia.values()) {
-                if (estado.getValor() == valor) {
-                    return estado;
-                }
-            }
-            throw new IllegalArgumentException("Valor no válido: " + valor);
-        }
-    }
+    private byte estado;    
 
 }

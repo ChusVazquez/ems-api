@@ -22,6 +22,9 @@ public class AsistenciaMapper {
     AlumnoMapper alumnoMapper;
 
     @Autowired
+    ProfesorMapper profesorMapper;
+
+    @Autowired
     ClaseRepository claseRepository;
 
     /**
@@ -41,6 +44,8 @@ public class AsistenciaMapper {
         
         asistencia.setAlumno(alumnoMapper.baseDtoToEntity(asistenciaDTO.getAlumno()));
 
+        asistencia.setProfesor(profesorMapper.baseDtoToEntity(asistenciaDTO.getProfesor()));        
+
         return asistencia;
     }
 
@@ -48,6 +53,8 @@ public class AsistenciaMapper {
         AsistenciaDTO asistenciaDTO = modelMapper.map(asistencia, AsistenciaDTO.class);
 
         asistenciaDTO.setAlumno(alumnoMapper.entityToBaseDTO(asistencia.getAlumno()));
+
+        asistenciaDTO.setProfesor(profesorMapper.entityToBaseDTO(asistencia.getProfesor()));
 
         asistenciaDTO.setClase_id(asistencia.getAlumno().getId());
 

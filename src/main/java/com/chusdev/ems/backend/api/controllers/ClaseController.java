@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chusdev.ems.backend.api.models.dto.AsistenciaDTO;
 import com.chusdev.ems.backend.api.models.dto.ClaseDTO;
+import com.chusdev.ems.backend.api.models.dto.mapper.AsistenciaMapper;
 import com.chusdev.ems.backend.api.models.dto.mapper.ClaseMapper;
 import com.chusdev.ems.backend.api.models.entities.Clase;
+import com.chusdev.ems.backend.api.services.AsistenciaService;
 import com.chusdev.ems.backend.api.services.ClaseService;
 
 @RestController
@@ -26,6 +29,12 @@ public class ClaseController {
 
     @Autowired
     private ClaseService service;
+
+    @Autowired
+    private AsistenciaService asistenciaService;
+
+    @Autowired
+    private AsistenciaMapper asistenciaMapper;
 
     @Autowired
     private ClaseMapper claseMapper;
@@ -44,6 +53,11 @@ public class ClaseController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/getAsistencias")
+    public List<AsistenciaDTO> getClases(@PathVariable Long id){
+        return asistenciaMapper.listToDTO(asistenciaService.findByClaseId(id));
     }
 
     @PostMapping

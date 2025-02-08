@@ -127,7 +127,7 @@ public class ClaseServiceImpl implements ClaseService{
                     //Generar asistencia por cada alumno
 
                     listaAsistencias = alumnos.stream()
-                        .map(alumno -> new Asistencia(clase, alumno))
+                        .map(alumno -> new Asistencia(clase, alumno, clase.getHorario().getProfesor()))
                         .collect(Collectors.toList());
 
                     if (listaAsistencias != null){
