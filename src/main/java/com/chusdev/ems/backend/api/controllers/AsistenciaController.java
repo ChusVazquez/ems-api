@@ -64,6 +64,19 @@ public class AsistenciaController {
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/setEstado/{id}")
+    public byte setEstado(@PathVariable Long id, @RequestBody AsistenciaDTO asistenciaDTO) {
+        byte estado = 0;
+        if (asistenciaDTO != null && asistenciaDTO.getEstado() != null){
+            Optional<Asistencia> optAsistencia = service.setEstado(id, asistenciaDTO.getEstado());
+            if (optAsistencia.isPresent()){
+                estado = optAsistencia.orElseThrow().getEstado();
+            }
+        }
+        
+        return estado;
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> remove(@PathVariable Long id){
         Optional<Asistencia> optAsistencia = service.findById(id);

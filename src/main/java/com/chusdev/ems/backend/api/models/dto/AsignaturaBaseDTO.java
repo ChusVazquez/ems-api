@@ -10,5 +10,6 @@ import lombok.Setter;
 @Setter
 public class AsignaturaBaseDTO {
     private Long id;
-    private String alias;    
+    private String alias;
+    private String nombre;    
 }

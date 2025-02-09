@@ -26,10 +26,13 @@ public class HorarioServiceImpl implements HorarioService {
     HorarioRepository repository;
 
     @Autowired
+    HorarioMapper horarioMapper;
+
+    @Autowired
     ClaseRepository claseRepository;
 
     @Autowired
-    HorarioMapper horarioMapper;
+    ClaseService claseService;
 
     @Override
     @Transactional(readOnly = true)
@@ -124,7 +127,7 @@ public class HorarioServiceImpl implements HorarioService {
                 clase.setGrupo(horario.getGrupo());
                 clase.setProfesor(horario.getProfesor());
                 
-                claseRepository.save(clase);
+                claseService.save(clase);
 
                 //Establezco como fechaDesde la fecha de la clase creada 
                 //como base para calcular la siguiente

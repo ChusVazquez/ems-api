@@ -79,6 +79,21 @@ public class AsistenciaServiceImpl implements AsistenciaService{
 
     @Override
     @Transactional
+    public Optional<Asistencia> setEstado(Long asistenciaId, byte estado) {
+        Asistencia asistencia = null;
+        
+        Optional<Asistencia> optAsistencia = repository.findById(asistenciaId);
+        if (optAsistencia.isPresent()){
+            asistencia = optAsistencia.orElseThrow();
+            asistencia.setEstado(estado);
+            asistencia = this.save(asistencia); 
+        }
+
+        return Optional.ofNullable(asistencia);
+    }
+
+    @Override
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }    

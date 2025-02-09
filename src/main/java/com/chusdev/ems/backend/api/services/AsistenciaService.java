@@ -19,6 +19,8 @@ public interface AsistenciaService {
 
     Optional<Asistencia> update(AsistenciaDTO asistenciaDTO, Long id);
 
+    Optional<Asistencia> setEstado(Long asistenciaId, byte estado);
+
     void delete(Long id);
 
 
