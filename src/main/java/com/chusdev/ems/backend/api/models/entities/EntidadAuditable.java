@@ -6,13 +6,14 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+// import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
+// import jakarta.persistence.EntityListeners;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +30,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
+//Se omite la auditoría automática hasta que solucione los problemas
+//de recursividad que generan los métodos update
+// @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public class EntidadAuditable extends EntidadBase {    
 
@@ -43,8 +46,9 @@ public class EntidadAuditable extends EntidadBase {
     private LocalDateTime fechaCreacion;
 
     @LastModifiedBy
-    @ManyToOne
-    @JoinColumn(name = "usr_modificacion")
+    //@ManyToOne
+    //@JoinColumn(name = "usr_modificacion")
+    @Transient
     private User usuarioModificacion;    
 
     @LastModifiedDate

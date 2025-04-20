@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AlumnoDTO {
-    //Propiedades de Persona
+public class ContactoDTO {
+    private Long id;
+    private int numContacto;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -16,13 +17,4 @@ public class AlumnoDTO {
     private String telefono;
     private String movil;
     private String email;
-
-    //Propiedades de Alumno
-    private Long id;
-
-    private Long grupoId;
-
-    private String idalu;
-    private String ina;
-    private String idea;    
 }

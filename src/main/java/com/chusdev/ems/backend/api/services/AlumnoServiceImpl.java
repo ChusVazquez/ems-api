@@ -20,7 +20,7 @@ public class AlumnoServiceImpl implements AlumnoService{
     private AlumnoRepository repository;
 
     @Autowired
-    private AlumnoMapper alumnoMapper;
+    private AlumnoMapper alumnoMapper;   
 
     @Override
     @Transactional
@@ -59,7 +59,8 @@ public class AlumnoServiceImpl implements AlumnoService{
         Alumno savedAlumno = null;
         if (optAlumno.isPresent()){
             Alumno dbAlumno = optAlumno.orElseThrow();
-            BeanUtils.copyProperties(alumno, dbAlumno, "id");
+            String[] ignoreProperties = {"id"};            
+            BeanUtils.copyProperties(alumno, dbAlumno, ignoreProperties);                        
             savedAlumno = this.save(dbAlumno);
         }
 

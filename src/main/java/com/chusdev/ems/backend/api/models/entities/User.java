@@ -32,7 +32,7 @@ public class User implements IUser{
     private Long id;
 
     @NotBlank
-    @Size(min = 4, max = 8)
+    @Size(min = 4, max = 20)
     @Column(unique = true)
     private String username;
 

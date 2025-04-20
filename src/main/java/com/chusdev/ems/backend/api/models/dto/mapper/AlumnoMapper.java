@@ -11,16 +11,20 @@ import com.chusdev.ems.backend.api.models.dto.AlumnoDTO;
 import com.chusdev.ems.backend.api.models.entities.Alumno;
 import com.chusdev.ems.backend.api.models.entities.Grupo;
 import com.chusdev.ems.backend.api.repositories.AlumnoRepository;
+import com.chusdev.ems.backend.api.repositories.ContactoRepository;
 import com.chusdev.ems.backend.api.repositories.GrupoRepository;
 
 @Component
 public class AlumnoMapper {
 
     @Autowired
+    ModelMapper modelMapper;
+    
+    @Autowired
     GrupoRepository grupoRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    ContactoRepository contactoRepository;
 
     @Autowired
     AlumnoRepository alumnoRepository;
@@ -35,7 +39,7 @@ public class AlumnoMapper {
             {
                 alumno.setGrupo(grupoAlumno.get());
             }
-        }
+        }        
 
         return alumno;
     }
@@ -63,7 +67,7 @@ public class AlumnoMapper {
         if (grupoAlumno != null)
         {
             alumnoDTO.setGrupoId(grupoAlumno.getId());
-        }
+        }        
 
         return alumnoDTO;
     }
