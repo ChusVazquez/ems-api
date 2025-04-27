@@ -23,6 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 import com.chusdev.ems.backend.api.auth.filters.JwtAuthenticationFilter;
 import com.chusdev.ems.backend.api.auth.filters.JwtValidationFilter;
 
+import jakarta.servlet.DispatcherType;
+
 @Configuration
 public class SpringSecurityConfig {
 
@@ -42,10 +44,22 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain customFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authRules -> authRules
+                //Regla para permitir acceso al recurso /error y no volverte loco
+                //Porque lanzas un 400 y te devuelve un 403
+                .requestMatchers("/error").permitAll()
+                //Reglas para Usuarios
                 .requestMatchers(HttpMethod.GET, "/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/{id}").hasAnyRole("USER", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers("/users/**").hasRole("ADMIN") //Independientemente del método
+                //Reglas para Grupos
+                .requestMatchers(HttpMethod.GET, "/grupos").permitAll()
+                .requestMatchers(HttpMethod.GET, "/grupos/{id}").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/grupos").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/grupos/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/grupos/**").hasRole("ADMIN")
+                //.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()                
+                //Cualquier otra
                 .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
                 .addFilter(new JwtValidationFilter(authenticationConfiguration.getAuthenticationManager()))
@@ -59,7 +73,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

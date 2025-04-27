@@ -1,6 +1,7 @@
 package com.chusdev.ems.backend.api.models.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +22,10 @@ public class Grupo extends EntidadAuditable{
 
     private byte tipo;
 
+    @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
 
+    @NotBlank
     private String alias;
 
 }
