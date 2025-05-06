@@ -23,7 +23,7 @@ import org.springframework.web.filter.CorsFilter;
 import com.chusdev.ems.backend.api.auth.filters.JwtAuthenticationFilter;
 import com.chusdev.ems.backend.api.auth.filters.JwtValidationFilter;
 
-import jakarta.servlet.DispatcherType;
+// import jakarta.servlet.DispatcherType;
 
 @Configuration
 public class SpringSecurityConfig {
