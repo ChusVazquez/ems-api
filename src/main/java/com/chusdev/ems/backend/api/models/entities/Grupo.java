@@ -25,7 +25,7 @@ public class Grupo extends EntidadAuditable{
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
 
-    @NotBlank
+    @NotBlank(message = "El alias no puede estar vacío")
     private String alias;
 
 }
