@@ -23,4 +23,6 @@ public class AsistenciaDTO {
     private AlumnoBaseDTO alumno;
 
     private ProfesorBaseDTO profesor;
+
+    private ClaseDTO clase;
 }

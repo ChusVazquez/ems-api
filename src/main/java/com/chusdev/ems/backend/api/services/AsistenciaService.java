@@ -3,11 +3,15 @@ package com.chusdev.ems.backend.api.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import com.chusdev.ems.backend.api.models.dto.AsistenciaDTO;
 import com.chusdev.ems.backend.api.models.entities.Asistencia;
 
 public interface AsistenciaService {
     List<Asistencia> findAll();
+
+    List<Asistencia> findByFiltro(Specification<Asistencia> where);
 
     Optional<Asistencia> findById(Long id);
 

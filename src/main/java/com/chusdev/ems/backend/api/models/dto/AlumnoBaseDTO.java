@@ -10,4 +10,5 @@ public class AlumnoBaseDTO {
     public String nombre;
     public String apellido1;
     public String apellido2;
+    public GrupoDTO grupo;
 }

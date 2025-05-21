@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,10 @@ public class AsistenciaServiceImpl implements AsistenciaService{
     @Transactional(readOnly = true)
     public List<Asistencia> findAll() {
         return (List<Asistencia>) repository.findAll();
+    }
+
+    public List<Asistencia> findByFiltro(Specification<Asistencia> where) {
+        return (List<Asistencia>) repository.findAll(where);
     }
 
     /**
