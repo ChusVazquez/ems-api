@@ -62,13 +62,13 @@ public class HorarioMapper {
         horario.setAsignatura(asignaturaMapper.baseDtoToEntity(horarioDTO.getAsignatura()));
         
         //Mapeo de Horario.Grupo en base al Id de horarioDTO.GrupoDTO.Id
-        horario.setGrupo(grupoMapper.dtoToEntity(horarioDTO.getGrupo()));        
+        horario.setGrupo(grupoMapper.dtoIdToEntity(horarioDTO.getGrupo()));        
 
         //Mapeo de Horario.Profesor en base al Id de horarioDTO.ProfesorBaseDTO.Id
         horario.setProfesor(profesorMapper.baseDtoToEntity(horarioDTO.getProfesor()));
         
         //Mapeo de Horario.Aula en base al Id de horarioDTO.AulaDTO.Id
-        horario.setAula(aulaMapper.dtoToEntity(horarioDTO.getAula()));
+        horario.setAula(aulaMapper.dtoIdToEntity(horarioDTO.getAula()));
 
         return horario;
     }

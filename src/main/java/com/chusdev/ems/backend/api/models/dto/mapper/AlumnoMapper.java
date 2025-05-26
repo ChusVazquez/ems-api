@@ -1,6 +1,8 @@
 package com.chusdev.ems.backend.api.models.dto.mapper;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +79,11 @@ public class AlumnoMapper {
         AlumnoBaseDTO alumnoBaseDTO = modelMapper.map(alumno, AlumnoBaseDTO.class);
 
         return alumnoBaseDTO;
+    }
+
+    public List<AlumnoDTO> listToDTO(List<Alumno> listaAlumnos){
+        return listaAlumnos.stream()
+                .map(alumno -> this.entityToDTO(alumno))
+                .collect(Collectors.toList());
     }
 }

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chusdev.ems.backend.api.models.dto.AlumnoDTO;
+import com.chusdev.ems.backend.api.models.dto.mapper.AlumnoMapper;
 import com.chusdev.ems.backend.api.models.entities.Grupo;
+import com.chusdev.ems.backend.api.services.AlumnoService;
 import com.chusdev.ems.backend.api.services.GrupoService;
 import com.chusdev.ems.backend.api.utils.ValidationUtils;
 
@@ -29,10 +32,19 @@ import org.slf4j.LoggerFactory;
 @RequestMapping("/grupos")
 public class GrupoController {
 
+    private final AlumnoMapper alumnoMapper;
+
     private static final Logger log = LoggerFactory.getLogger(GrupoController.class);
 
     @Autowired
     private GrupoService service;
+
+    @Autowired
+    private AlumnoService alumnoService;
+
+    GrupoController(AlumnoMapper alumnoMapper) {
+        this.alumnoMapper = alumnoMapper;
+    }
     
     @GetMapping
     public List<Grupo> list() {
@@ -46,6 +58,11 @@ public class GrupoController {
             return ResponseEntity.ok(optGrupo.orElseThrow());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/getAlumnos")
+    public List<AlumnoDTO> getAlumnos(@PathVariable Long id){
+        return alumnoMapper.listToDTO(alumnoService.findByGrupoId(id));
     }
 
     @PostMapping

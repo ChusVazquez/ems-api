@@ -38,7 +38,7 @@ public class AlumnoServiceImpl implements AlumnoService{
     @Transactional(readOnly = true)
     public Optional<Alumno> findById(Long id) {
         return repository.findById(id);
-    }
+    }    
 
     @Override
     @Transactional
