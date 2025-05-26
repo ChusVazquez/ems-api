@@ -131,7 +131,7 @@ public class HorarioServiceImpl implements HorarioService {
 
                 //Establezco como fechaDesde la fecha de la clase creada 
                 //como base para calcular la siguiente
-                fechaDesde = inicioProximaClase.toLocalDate().plusWeeks(1);
+                fechaDesde = inicioProximaClase.toLocalDate();
             }
         }
 
