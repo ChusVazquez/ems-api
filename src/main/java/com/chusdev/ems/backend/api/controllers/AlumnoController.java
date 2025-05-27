@@ -49,6 +49,11 @@ public class AlumnoController {
         if(result.hasErrors()){
             return ValidationUtils.handleValidationErrors(result);
         }
+
+        if (alumnoDTO != null && alumnoDTO.getId() == 0){
+            alumnoDTO.setId(null);
+        }
+
         return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(service.save(alumnoDTO));
