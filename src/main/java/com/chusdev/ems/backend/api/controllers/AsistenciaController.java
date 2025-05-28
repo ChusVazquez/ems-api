@@ -77,30 +77,30 @@ public class AsistenciaController {
         // }
 
         if (fechaInicio != null) {
-            where = where.and((root, _, criteriaBuilder) ->
+            where = where.and((root, __, criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get("clase").get("fechaInicio"), fechaInicio));
         }
 
         if (fechaFin != null) {
-            where = where.and((root, _, criteriaBuilder) ->
+            where = where.and((root, __, criteriaBuilder) ->
                 criteriaBuilder.lessThanOrEqualTo(root.get("clase").get("fechaFin"), fechaFin));
         }
 
         // Grupos
         if (grupos != null && !grupos.isEmpty()) {
-            where = where.and((root, _, _) -> 
+            where = where.and((root, __, ___) -> 
                 root.get("alumno").get("grupo").get("id").in(grupos));
         }
 
         // Asignaturas
         if (asignaturas != null && !asignaturas.isEmpty()) {
-            where = where.and((root, _, _) -> 
+            where = where.and((root, __, ___) -> 
                 root.get("clase").get("asignatura").get("id").in(asignaturas));
         }
 
         // Alumnos
         if (alumnos != null && !alumnos.isEmpty()) {
-            where = where.and((root, _, _) -> 
+            where = where.and((root, __, ___) -> 
                 root.get("alumno").get("id").in(alumnos));
         }
 
