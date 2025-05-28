@@ -15,7 +15,7 @@
 	<name>api</name>
 	<description>EMS REST API</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>23</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -114,10 +114,7 @@
             	<artifactId>maven-compiler-plugin</artifactId>
             	<version>3.11.0</version>
             	<configuration>
-                	<release>21</release>
-					<compilerArgs>
-            			<arg>--enable-preview</arg>
-        			</compilerArgs>
+                	<release>23</release>					
                 	<annotationProcessorPaths>
                     <path>
                         <groupId>org.projectlombok</groupId>
